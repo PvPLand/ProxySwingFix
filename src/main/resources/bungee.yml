@@ -1,0 +1,4 @@
+name: BungeeSwingFix
+version: '${project.version}'
+main: land.pvp.swingfix.BungeeSwingFix
+author: Iowa
