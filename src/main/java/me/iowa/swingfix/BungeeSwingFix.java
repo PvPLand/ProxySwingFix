@@ -1,4 +1,4 @@
-package land.pvp.swingfix;
+package me.iowa.swingfix;
 
 import com.google.gson.JsonObject;
 import io.netty.buffer.ByteBuf;
@@ -42,6 +42,7 @@ public final class BungeeSwingFix extends Plugin implements Listener {
             DefinedPacket.writeString("", byteBuf); // Default String Value
             byte[] bytes = new byte[byteBuf.readableBytes()];
             byteBuf.readBytes(bytes);
+            event.getPlayer().sendData("REGISTER", "lunarclient:pm".getBytes(StandardCharsets.UTF_8));
             event.getPlayer().sendData(BungeeSwingFix.LUNAR_PM_CHANNEL, bytes);
             byteBuf.release();
 
