@@ -24,12 +24,13 @@ public class PluginMessageUtil {
         LUNAR_PACKET_BYTES = byteBuf.array();
         byteBuf.release();
 
-        JsonObject finalJson = new JsonObject(), animations = new JsonObject(), removeHitDelay = new JsonObject(), extraData = new JsonObject();
+        JsonObject finalJson = new JsonObject(),modsDisallowed = new JsonObject(), animations = new JsonObject(), removeHitDelay = new JsonObject(), extraData = new JsonObject();
         animations.addProperty("disabled", false);
         removeHitDelay.addProperty("forced", true);
         extraData.add("removeHitDelay", removeHitDelay);
         animations.add("extra_data", extraData);
-        finalJson.add("modsDisallowed", animations);
+        modsDisallowed.add("Animations", animations);
+        finalJson.add("modsDisallowed", modsDisallowed);
 
         BLC_PACKET_BYTES = finalJson.toString().getBytes(StandardCharsets.UTF_8);
     }
