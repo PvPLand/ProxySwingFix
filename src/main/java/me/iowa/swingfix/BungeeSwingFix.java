@@ -19,11 +19,18 @@ public final class BungeeSwingFix extends Plugin implements Listener {
 
     @Override
     public void onDisable() {
+        this.getProxy().unregisterChannel(PluginMessageUtil.LUNAR_PM_CHANNEL);
+        this.getProxy().unregisterChannel(PluginMessageUtil.BLC_CHANNEL);
     }
 
     @EventHandler
     public void onJoin(ServerConnectedEvent event) {
+        // Lunar has to be delayed otherwise its server rule settings are reset by the vanilla server's REGISTER payload.
         getProxy().getScheduler().schedule(this, () -> {
+            if (event.getPlayer() == null) {
+                return;
+            }
+
             event.getPlayer().sendData("REGISTER", PluginMessageUtil.LUNAR_PM_CHANNEL.getBytes(StandardCharsets.UTF_8));
             event.getPlayer().sendData(PluginMessageUtil.LUNAR_PM_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
 

@@ -30,7 +30,12 @@ public class VelocitySwingFix {
 
     @Subscribe
     public void onServerConnect(ServerConnectedEvent event) {
+        // Lunar has to be delayed otherwise its server rule settings are reset by the vanilla server's REGISTER payload.
         server.getScheduler().buildTask(this, () -> {
+            if (event.getPlayer() == null) {
+                return;
+            }
+
             // Lunar SwingFix
             event.getPlayer().sendPluginMessage(() -> "REGISTER", PluginMessageUtil.LUNAR_PM_CHANNEL.getBytes(StandardCharsets.UTF_8));
             event.getPlayer().sendPluginMessage(() -> PluginMessageUtil.LUNAR_PM_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
