@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>BungeeSwingFix</groupId>
-    <artifactId>BungeeSwingFix</artifactId>
+    <groupId>ProxySwingFix</groupId>
+    <artifactId>ProxySwingFix</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>BadlionSwingFix</name>
+    <name>ProxySwingFix</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -69,6 +69,13 @@
             <groupId>io.github.waterfallmc</groupId>
             <artifactId>waterfall-api</artifactId>
             <version>1.19-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.velocitypowered</groupId>
+            <artifactId>velocity-api</artifactId>
+            <version>3.1.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
