@@ -1,8 +1,9 @@
-package me.iowa.swingfix;
+package land.pvp.swingfix;
 
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
-import me.iowa.swingfix.util.PluginMessageUtil;
+import land.pvp.swingfix.util.PluginMessageUtil;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ServerConnectedEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -26,15 +27,17 @@ public final class BungeeSwingFix extends Plugin implements Listener {
     @EventHandler
     public void onJoin(ServerConnectedEvent event) {
         // Lunar has to be delayed otherwise its server rule settings are reset by the vanilla server's REGISTER payload.
-        getProxy().getScheduler().schedule(this, () -> {
-            if (event.getPlayer() == null) {
+        this.getProxy().getScheduler().schedule(this, () -> {
+            ProxiedPlayer player = event.getPlayer();
+            if (player == null) {
                 return;
             }
 
-            event.getPlayer().sendData("REGISTER", PluginMessageUtil.LUNAR_PM_CHANNEL.getBytes(StandardCharsets.UTF_8));
-            event.getPlayer().sendData(PluginMessageUtil.LUNAR_PM_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
-
-            event.getPlayer().sendData(PluginMessageUtil.BLC_CHANNEL, PluginMessageUtil.BLC_PACKET_BYTES);
+            // Lunar SwingFix
+            player.sendData("REGISTER", PluginMessageUtil.LUNAR_PM_CHANNEL.getBytes(StandardCharsets.UTF_8));
+            player.sendData(PluginMessageUtil.LUNAR_PM_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
+            // BLC SwingFix
+            player.sendData(PluginMessageUtil.BLC_CHANNEL, PluginMessageUtil.BLC_PACKET_BYTES);
         }, 1, TimeUnit.SECONDS);
     }
 }

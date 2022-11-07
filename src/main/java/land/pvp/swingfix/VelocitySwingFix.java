@@ -1,15 +1,16 @@
-package me.iowa.swingfix;
+package land.pvp.swingfix;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import me.iowa.swingfix.util.PluginMessageUtil;
+import land.pvp.swingfix.util.PluginMessageUtil;
 
 @Plugin(id = "velocityswingfix", name = "VelocitySwingFix", version = "1.0.0-SNAPSHOT", authors = {"PvP Land Development"})
 public class VelocitySwingFix {
@@ -22,26 +23,24 @@ public class VelocitySwingFix {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        // Do some operation demanding access to the Velocity API here.
-        // For instance, we could register an event:
-        server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.LUNAR_PM_CHANNEL));
-        server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.BLC_CHANNEL));
+        this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.LUNAR_PM_CHANNEL));
+        this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.BLC_CHANNEL));
     }
 
     @Subscribe
     public void onServerConnect(ServerConnectedEvent event) {
         // Lunar has to be delayed otherwise its server rule settings are reset by the vanilla server's REGISTER payload.
-        server.getScheduler().buildTask(this, () -> {
-            if (event.getPlayer() == null) {
+        this.server.getScheduler().buildTask(this, () -> {
+            Player player = event.getPlayer();
+            if (player == null) {
                 return;
             }
 
             // Lunar SwingFix
-            event.getPlayer().sendPluginMessage(() -> "REGISTER", PluginMessageUtil.LUNAR_PM_CHANNEL.getBytes(StandardCharsets.UTF_8));
-            event.getPlayer().sendPluginMessage(() -> PluginMessageUtil.LUNAR_PM_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
-
+            player.sendPluginMessage(() -> "REGISTER", PluginMessageUtil.LUNAR_PM_CHANNEL.getBytes(StandardCharsets.UTF_8));
+            player.sendPluginMessage(() -> PluginMessageUtil.LUNAR_PM_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
             // BLC SwingFix
-            event.getPlayer().sendPluginMessage(() -> PluginMessageUtil.BLC_CHANNEL, PluginMessageUtil.BLC_PACKET_BYTES);
+            player.sendPluginMessage(() -> PluginMessageUtil.BLC_CHANNEL, PluginMessageUtil.BLC_PACKET_BYTES);
         }).delay(1, TimeUnit.SECONDS).schedule();
     }
 }

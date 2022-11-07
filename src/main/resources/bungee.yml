@@ -1,4 +1,4 @@
 name: BungeeSwingFix
 version: '${project.version}'
-main: me.iowa.swingfix.BungeeSwingFix
+main: land.pvp.swingfix.BungeeSwingFix
 author: Iowa
