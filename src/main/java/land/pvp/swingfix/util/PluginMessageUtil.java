@@ -7,10 +7,12 @@ import java.nio.charset.StandardCharsets;
 
 public class PluginMessageUtil {
     public static final String LUNAR_PM_CHANNEL = "lunarclient:pm";
+    public static final String LUNAR_APOLLO_PM_CHANNEL = "apollo:json";
     public static final String BLC_CHANNEL = "badlion:modapi";
 
     public static final byte[] LUNAR_PACKET_BYTES;
     public static final byte[] BLC_PACKET_BYTES;
+    public static final byte[] APOLLO_PACKET_BYTES;
 
     static {
         // Default values required below otherwise the packet isn't constructed correctly?
@@ -37,5 +39,11 @@ public class PluginMessageUtil {
         finalJson.add("modsDisallowed", modsDisallowed);
 
         BLC_PACKET_BYTES = finalJson.toString().getBytes(StandardCharsets.UTF_8);
+
+        JsonObject message = new JsonObject();
+        message.addProperty("apollo_module", "combat");
+        message.addProperty("enable", true);
+
+        APOLLO_PACKET_BYTES = message.toString().getBytes(StandardCharsets.UTF_8);
     }
 }

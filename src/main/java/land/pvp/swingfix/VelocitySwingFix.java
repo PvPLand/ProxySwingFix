@@ -39,6 +39,8 @@ public class VelocitySwingFix {
             // Lunar SwingFix
             player.sendPluginMessage(() -> "REGISTER", PluginMessageUtil.LUNAR_PM_CHANNEL.getBytes(StandardCharsets.UTF_8));
             player.sendPluginMessage(() -> PluginMessageUtil.LUNAR_PM_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
+            // Lunar (Apollo) SwingFix
+            player.sendPluginMessage(() -> PluginMessageUtil.LUNAR_APOLLO_PM_CHANNEL, PluginMessageUtil.APOLLO_PACKET_BYTES);
             // BLC SwingFix
             player.sendPluginMessage(() -> PluginMessageUtil.BLC_CHANNEL, PluginMessageUtil.BLC_PACKET_BYTES);
         }).delay(1, TimeUnit.SECONDS).schedule();
