@@ -9,10 +9,12 @@ public class PluginMessageUtil {
     public static final String LUNAR_PM_CHANNEL = "lunarclient:pm";
     public static final String LUNAR_APOLLO_PM_CHANNEL = "apollo:json";
     public static final String BLC_CHANNEL = "badlion:modapi";
+    public static final String ANIMATIUM_CHANNEL = "animatium:set_features";
 
     public static final byte[] LUNAR_PACKET_BYTES;
     public static final byte[] BLC_PACKET_BYTES;
     public static final byte[] APOLLO_PACKET_BYTES;
+    public static final byte[] ANIMATIUM_PACKET_BYTES;
 
     static {
         // Default values required below otherwise the packet isn't constructed correctly?
@@ -24,6 +26,12 @@ public class PluginMessageUtil {
         byteBuf.writeFloat(0); // Default Float Value
         ByteBufUtil.writeString("", byteBuf); // Default String Value
         LUNAR_PACKET_BYTES = byteBuf.array();
+        byteBuf.release();
+
+        byteBuf = Unpooled.buffer();
+        ByteBufUtil.writeVarInt(1, byteBuf);
+        ByteBufUtil.writeString("miss_penalty", byteBuf);
+        ANIMATIUM_PACKET_BYTES = byteBuf.array();
         byteBuf.release();
 
         JsonObject finalJson = new JsonObject();
