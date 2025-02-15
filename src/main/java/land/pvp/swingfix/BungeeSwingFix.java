@@ -36,8 +36,11 @@ public final class BungeeSwingFix extends Plugin implements Listener {
             // Lunar SwingFix
             player.sendData("REGISTER", PluginMessageUtil.LUNAR_PM_CHANNEL.getBytes(StandardCharsets.UTF_8));
             player.sendData(PluginMessageUtil.LUNAR_PM_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
+            player.sendData(PluginMessageUtil.LUNAR_APOLLO_PM_CHANNEL, PluginMessageUtil.APOLLO_PACKET_BYTES);
             // BLC SwingFix
             player.sendData(PluginMessageUtil.BLC_CHANNEL, PluginMessageUtil.BLC_PACKET_BYTES);
+            // Animatium
+            player.sendData(PluginMessageUtil.ANIMATIUM_CHANNEL, PluginMessageUtil.ANIMATIUM_PACKET_BYTES);
         }, 1, TimeUnit.SECONDS);
     }
 }

@@ -43,6 +43,8 @@ public class VelocitySwingFix {
             player.sendPluginMessage(() -> PluginMessageUtil.LUNAR_APOLLO_PM_CHANNEL, PluginMessageUtil.APOLLO_PACKET_BYTES);
             // BLC SwingFix
             player.sendPluginMessage(() -> PluginMessageUtil.BLC_CHANNEL, PluginMessageUtil.BLC_PACKET_BYTES);
+            // Animatium
+            player.sendPluginMessage(() -> PluginMessageUtil.ANIMATIUM_CHANNEL, PluginMessageUtil.ANIMATIUM_PACKET_BYTES);
         }).delay(1, TimeUnit.SECONDS).schedule();
     }
 }
