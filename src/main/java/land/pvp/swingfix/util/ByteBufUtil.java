@@ -37,4 +37,12 @@ public class ByteBufUtil {
         ByteBufUtil.writeVarInt(b.length, buf);
         buf.writeBytes(b);
     }
+
+    public static byte[] copy(ByteBuf buf) {
+        byte[] copy = new byte[buf.readableBytes()];
+        buf.markReaderIndex();
+        buf.readBytes(copy);
+        buf.resetReaderIndex();
+        return copy;
+    }
 }

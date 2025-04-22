@@ -1,0 +1,4 @@
+name: PaperSwingFix
+version: '${project.version}'
+main: land.pvp.swingfix.PaperSwingFix
+author: Iowa

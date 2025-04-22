@@ -1,13 +1,16 @@
 package land.pvp.swingfix.util;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import java.nio.charset.StandardCharsets;
 
 public class PluginMessageUtil {
-    public static final String LUNAR_PM_CHANNEL = "lunarclient:pm";
-    public static final String LUNAR_APOLLO_PM_CHANNEL = "apollo:json";
+    public static final String LUNAR_CHANNEL = "lunarclient:pm";
+    public static final String LUNAR_APOLLO_CHANNEL = "apollo:json";
     public static final String BLC_CHANNEL = "badlion:modapi";
     public static final String ANIMATIUM_CHANNEL = "animatium:set_features";
 
@@ -25,13 +28,12 @@ public class PluginMessageUtil {
         byteBuf.writeInt(0); // Default Int Value
         byteBuf.writeFloat(0); // Default Float Value
         ByteBufUtil.writeString("", byteBuf); // Default String Value
-        LUNAR_PACKET_BYTES = byteBuf.array();
-        byteBuf.release();
+        LUNAR_PACKET_BYTES = ByteBufUtil.copy(byteBuf);
+        byteBuf.clear();
 
-        byteBuf = Unpooled.buffer();
         ByteBufUtil.writeVarInt(1, byteBuf);
         ByteBufUtil.writeString("miss_penalty", byteBuf);
-        ANIMATIUM_PACKET_BYTES = byteBuf.array();
+        ANIMATIUM_PACKET_BYTES = ByteBufUtil.copy(byteBuf);
         byteBuf.release();
 
         JsonObject finalJson = new JsonObject();
@@ -48,9 +50,21 @@ public class PluginMessageUtil {
 
         BLC_PACKET_BYTES = finalJson.toString().getBytes(StandardCharsets.UTF_8);
 
+        JsonArray settings = new JsonArray();
+
+        JsonObject combat = new JsonObject();
+        combat.addProperty("apollo_module", "combat");
+        combat.addProperty("enable", true);
+
+        JsonObject properties = new JsonObject();
+        properties.add("disable-miss-penalty", new JsonPrimitive(true));
+        combat.add("properties", properties);
+
+        settings.add(combat);
+
         JsonObject message = new JsonObject();
-        message.addProperty("apollo_module", "combat");
-        message.addProperty("enable", true);
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage");
+        message.add("configurable_settings", settings);
 
         APOLLO_PACKET_BYTES = message.toString().getBytes(StandardCharsets.UTF_8);
     }

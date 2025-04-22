@@ -23,7 +23,9 @@ public class VelocitySwingFix {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.LUNAR_PM_CHANNEL));
+        this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.LUNAR_CHANNEL));
+        this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.LUNAR_APOLLO_CHANNEL));
+        this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.ANIMATIUM_CHANNEL));
         this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.BLC_CHANNEL));
     }
 
@@ -36,15 +38,19 @@ public class VelocitySwingFix {
                 return;
             }
 
+            String registerChannel = player.getProtocolVersion().getProtocol() > 340 ? "minecraft:register" : "REGISTER";
+
             // Lunar SwingFix
-            player.sendPluginMessage(() -> "REGISTER", PluginMessageUtil.LUNAR_PM_CHANNEL.getBytes(StandardCharsets.UTF_8));
-            player.sendPluginMessage(() -> PluginMessageUtil.LUNAR_PM_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
+            player.sendPluginMessage(() -> registerChannel, PluginMessageUtil.LUNAR_CHANNEL.getBytes(StandardCharsets.UTF_8));
+            player.sendPluginMessage(() -> PluginMessageUtil.LUNAR_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
             // Lunar (Apollo) SwingFix
-            player.sendPluginMessage(() -> PluginMessageUtil.LUNAR_APOLLO_PM_CHANNEL, PluginMessageUtil.APOLLO_PACKET_BYTES);
+            player.sendPluginMessage(() -> PluginMessageUtil.LUNAR_APOLLO_CHANNEL, PluginMessageUtil.APOLLO_PACKET_BYTES);
             // BLC SwingFix
             player.sendPluginMessage(() -> PluginMessageUtil.BLC_CHANNEL, PluginMessageUtil.BLC_PACKET_BYTES);
             // Animatium
-            player.sendPluginMessage(() -> PluginMessageUtil.ANIMATIUM_CHANNEL, PluginMessageUtil.ANIMATIUM_PACKET_BYTES);
+            if (player.getProtocolVersion().getProtocol() > 769) {
+                player.sendPluginMessage(() -> PluginMessageUtil.ANIMATIUM_CHANNEL, PluginMessageUtil.ANIMATIUM_PACKET_BYTES);
+            }
         }).delay(1, TimeUnit.SECONDS).schedule();
     }
 }

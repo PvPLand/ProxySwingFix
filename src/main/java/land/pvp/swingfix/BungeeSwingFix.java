@@ -12,16 +12,20 @@ import net.md_5.bungee.event.EventHandler;
 public final class BungeeSwingFix extends Plugin implements Listener {
     @Override
     public void onEnable() {
-        this.getProxy().registerChannel(PluginMessageUtil.LUNAR_PM_CHANNEL);
+        this.getProxy().registerChannel(PluginMessageUtil.LUNAR_CHANNEL);
+        this.getProxy().registerChannel(PluginMessageUtil.LUNAR_APOLLO_CHANNEL);
         this.getProxy().registerChannel(PluginMessageUtil.BLC_CHANNEL);
+        this.getProxy().registerChannel(PluginMessageUtil.ANIMATIUM_CHANNEL);
 
         this.getProxy().getPluginManager().registerListener(this, this);
     }
 
     @Override
     public void onDisable() {
-        this.getProxy().unregisterChannel(PluginMessageUtil.LUNAR_PM_CHANNEL);
+        this.getProxy().unregisterChannel(PluginMessageUtil.LUNAR_CHANNEL);
         this.getProxy().unregisterChannel(PluginMessageUtil.BLC_CHANNEL);
+        this.getProxy().unregisterChannel(PluginMessageUtil.LUNAR_APOLLO_CHANNEL);
+        this.getProxy().unregisterChannel(PluginMessageUtil.ANIMATIUM_CHANNEL);
     }
 
     @EventHandler
@@ -34,9 +38,9 @@ public final class BungeeSwingFix extends Plugin implements Listener {
             }
 
             // Lunar SwingFix
-            player.sendData("REGISTER", PluginMessageUtil.LUNAR_PM_CHANNEL.getBytes(StandardCharsets.UTF_8));
-            player.sendData(PluginMessageUtil.LUNAR_PM_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
-            player.sendData(PluginMessageUtil.LUNAR_APOLLO_PM_CHANNEL, PluginMessageUtil.APOLLO_PACKET_BYTES);
+            player.sendData("REGISTER", PluginMessageUtil.LUNAR_CHANNEL.getBytes(StandardCharsets.UTF_8));
+            player.sendData(PluginMessageUtil.LUNAR_CHANNEL, PluginMessageUtil.LUNAR_PACKET_BYTES);
+            player.sendData(PluginMessageUtil.LUNAR_APOLLO_CHANNEL, PluginMessageUtil.APOLLO_PACKET_BYTES);
             // BLC SwingFix
             player.sendData(PluginMessageUtil.BLC_CHANNEL, PluginMessageUtil.BLC_PACKET_BYTES);
             // Animatium
