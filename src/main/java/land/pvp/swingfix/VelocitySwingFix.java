@@ -48,7 +48,7 @@ public class VelocitySwingFix {
             // BLC SwingFix
             player.sendPluginMessage(() -> PluginMessageUtil.BLC_CHANNEL, PluginMessageUtil.BLC_PACKET_BYTES);
             // Animatium
-            if (player.getProtocolVersion().getProtocol() > 769) {
+            if (player.getProtocolVersion().getProtocol() > 768) {
                 player.sendPluginMessage(() -> PluginMessageUtil.ANIMATIUM_CHANNEL, PluginMessageUtil.ANIMATIUM_PACKET_BYTES);
             }
         }).delay(1, TimeUnit.SECONDS).schedule();
