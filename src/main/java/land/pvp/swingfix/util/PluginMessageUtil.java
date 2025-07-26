@@ -32,7 +32,7 @@ public class PluginMessageUtil {
         byteBuf.clear();
 
         ByteBufUtil.writeVarInt(1, byteBuf);
-        ByteBufUtil.writeString("miss_penalty", byteBuf);
+        Utf8String.write(byteBuf, "miss_penalty", "miss_penalty".length());
         ANIMATIUM_PACKET_BYTES = ByteBufUtil.copy(byteBuf);
         byteBuf.release();
 
