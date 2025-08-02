@@ -13,11 +13,13 @@ public class PluginMessageUtil {
     public static final String LUNAR_APOLLO_CHANNEL = "apollo:json";
     public static final String BLC_CHANNEL = "badlion:modapi";
     public static final String ANIMATIUM_CHANNEL = "animatium:set_features";
+    public static final String CONTROLIFY_CHANNEL = "controlify:server_policy";
 
     public static final byte[] LUNAR_PACKET_BYTES;
     public static final byte[] BLC_PACKET_BYTES;
     public static final byte[] APOLLO_PACKET_BYTES;
     public static final byte[] ANIMATIUM_PACKET_BYTES;
+    public static final byte[] CONTROLIFY_PACKET_BYTES;
 
     static {
         // Default values required below otherwise the packet isn't constructed correctly?
@@ -34,6 +36,11 @@ public class PluginMessageUtil {
         ByteBufUtil.writeVarInt(1, byteBuf);
         Utf8String.write(byteBuf, "miss_penalty", "miss_penalty".length());
         ANIMATIUM_PACKET_BYTES = ByteBufUtil.copy(byteBuf);
+        byteBuf.clear();
+
+        Utf8String.write(byteBuf, "keyboardLikeMovement", "keyboardLikeMovement".length());
+        byteBuf.writeBoolean(true);
+        CONTROLIFY_PACKET_BYTES = ByteBufUtil.copy(byteBuf);
         byteBuf.release();
 
         JsonObject finalJson = new JsonObject();

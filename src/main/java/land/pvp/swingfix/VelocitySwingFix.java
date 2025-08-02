@@ -27,6 +27,7 @@ public class VelocitySwingFix {
         this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.LUNAR_APOLLO_CHANNEL));
         this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.ANIMATIUM_CHANNEL));
         this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.BLC_CHANNEL));
+        this.server.getChannelRegistrar().register(MinecraftChannelIdentifier.from(PluginMessageUtil.CONTROLIFY_CHANNEL));
     }
 
     @Subscribe
@@ -50,6 +51,7 @@ public class VelocitySwingFix {
             // Animatium
             if (player.getProtocolVersion().getProtocol() > 768) {
                 player.sendPluginMessage(() -> PluginMessageUtil.ANIMATIUM_CHANNEL, PluginMessageUtil.ANIMATIUM_PACKET_BYTES);
+                player.sendPluginMessage(() -> PluginMessageUtil.CONTROLIFY_CHANNEL, PluginMessageUtil.CONTROLIFY_PACKET_BYTES);
             }
         }).delay(1, TimeUnit.SECONDS).schedule();
     }
